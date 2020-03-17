@@ -1,0 +1,116 @@
+﻿@model OnlineShoppingStore.Models.Home.HomeIndexViewModel
+@using PagedList;
+@using PagedList.Mvc;
+
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div id="themeSlider" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+        <li data-target="#themeSlider" data-slide-to="0" class="active"></li>
+        <li data-target="#themeSlider" data-slide-to="1"></li>
+        <li data-target="#themeSlider" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner">
+        <div class="item active">
+            <div class="imgOverlay"></div>
+            <img style="height:320px;width:100%;" src="../Images/pexels-photo-1162890.jpeg" alt="First slide">
+            <div class="carousel-caption">
+                <h3>Trendy hijabs</h3>
+
+            </div>
+        </div>
+        <div class="item">
+            <div class="imgOverlay"></div>
+            <img style="height:320px;width:100%;" src="../Images/pexels-photo-1223345.jpeg" alt="Second slide">
+            <div class="carousel-caption">
+                <h3>Latest Collection</h3>
+
+            </div>
+        </div>
+        <div class="item">
+            <div class="imgOverlay"></div>
+            <img style="height:320px;width:100%;" src="~/Images/pexels-photo-1435186.jpeg" alt="Third slide">
+            <div class="carousel-caption">
+                <h3>Exciting offers</h3>
+
+            </div>
+        </div>
+    </div>
+    <a class="left carousel-control" href="#themeSlider" data-slide="prev">
+        <span class="fa fa-chevron-left"></span>
+    </a>
+    <a class="right carousel-control" href="#themeSlider" data-slide="next">
+        <span class="fa fa-chevron-right"></span>
+    </a>
+</div>
+
+    <div class="olContent f1"><h2 style="color:black">Search Product/Category</h2></div>
+    <form method="post">
+        <div class="olSearch fr">
+            <input type="text" name="search" placeholder="Enter Keyword" class="inputComn houseText form-control" />
+            <div class="searchIcon">
+                <input type="submit" class="searchBtn" value="Search"/>
+             
+            </div>
+        </div>
+    </form>
+<div class="row">
+    <div class="col-md-12">
+        <div class="page-header">
+            <h2>Featured Collection <small>Latest Hijabs</small></h2>
+        </div>
+    </div>
+</div>
+<div class="row product-containter">
+    @foreach (var item in Model.ListOfProducts)
+    {
+        <div class="col-md-3 col-sm-3 col-xs-6" style="margin-bottom:8px;">
+            <div class="thumbnail product-item" style="height:300px;">
+                <img class="img-responsive" title="Click to view Product Details"
+                     style="cursor:pointer;height:160px;width:100%;"
+                     src="~/Productimg/@item.ProductImage" />
+                <div class="caption">
+                    <h5>@item.ProductName</h5>
+                    <p>@item.Price Dhms</p>
+                    <p>
+                        @if (item.Quantity > 0)
+                        {
+                            using (Html.BeginForm("AddToCart", "Home", new { productId=@item.ProductId,Url="Index" }, FormMethod.Post))
+                            {
+                                <button type="submit" class="pull-right"><i class="fa fa-shopping-cart"></i></button>
+                            }
+
+                         <p>Available</p>
+                    }
+                    else
+                    {
+                        <p>Not Available</p>
+
+                    }
+                    </p>
+                        <div class="product-item-badge">
+
+                            @if (item.IsFeatured == true)
+                            {
+                                <p>New</p>
+                            }
+                            else
+                            {
+                                <p>Old</p>
+
+                            }
+                        </div>
+                </div>
+            </div>
+
+        </div>
+    }
+
+
+</div>
+<div class="container">
+    @Html.PagedListPager(Model.ListOfProducts, page => Url.Action("Index", new { page, search = Request.QueryString["search"] }))
+</div>

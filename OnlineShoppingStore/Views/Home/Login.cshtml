@@ -1,0 +1,227 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+    Layout = null;
+
+}
+@using OnlineShoppingStore.Models.Home
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @*@Styles.Render("~/Content/css")*@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    
+    <script src="~/Content/jquery-3.3.1.js"></script>
+    <link href="~/Content/MyMainLayout.css" rel="stylesheet" />
+    @Scripts.Render("~/bundles/modernizr")
+    <script>
+        function SaveForm() {
+            var name = $("#Username").val();
+            var email = $("#Email").val();
+            var password = $("#Password").val();
+            if (name == "" || email == "" || password == "") {
+                $("#message1").hide();
+                $("#message2").show();
+                return false;
+            }
+            var data=$("#Registration").serialize();
+            $.ajax({
+                type: "post",
+                data: data,
+                url: "/Home/SaveData",
+                success: function (result) {
+
+                    $("#message1").show();
+                    $("#message2").hide();
+                    $("#Registration")[0].reset();
+                }
+
+            });
+        }
+       
+    </script>
+
+</head>
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-6">
+                <div class="logo">
+                    <h1><a href="#">Online <span>Shopping Store</span></a></h1>
+                    <p>My Shop</p>
+                </div>
+            </div>
+           
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="nav-menus">
+                    <ul class="nav nav-pills">
+                        <li class="active"><a style="border-radius:initial;" href="@Url.Action("Index","Home")">Home</a></li>
+                        <li><a style="border-radius:initial;" href="#">Location</a></li>
+                        <li><a style="border-radius:initial;" href="#">About</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4 alert alert-info" style="margin-top:10%;margin-bottom:5%;">
+                <h4 class="text-center">Login</h4>
+                <form id="login">
+                    <div id="msg" style="display:none;"><ul style="color:red;">Invalid UserName or Password</ul></div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                            <input type="text" class="form-control" id="logEmail" name="email" placeholder="Email" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                            <input type="text" class="form-control" id="logPassword" name="password" placeholder="Password" />
+                        </div>
+                    </div>
+
+                </form>
+                <div class="form-group">
+                    <button type="submit" id="logSubmit" class="btn btn-info form-control" onclick="Login()"><i class="glyphicon glyphicon-log-in"></i>  Login</button>
+                </div>
+                <div class="form-group">
+                    <a href="@Url.Action("ForgotPassword","Home")" style="float:left" >Forgot Password?</a><a href="#" style="float:right;cursor:pointer" onclick="SignUp()">SignUp</a>
+                </div>
+            </div>
+        <hr />
+        <footer>
+            <div class="row">
+                <div class="col-md-12 copyright">
+
+                    <div class="col-md-6 col-sm-6 copyright-left">
+                        <p>&copy; @DateTime.Now.Year - OnlineShopingStore. All right reserved.</p>
+                    </div>
+                    <div class="col-md-6 col-sm-6 copyright-right">
+
+                        <ul class="list-unstyled list-social">
+                            <li><a href="#" target="_blank"><i class="fa fa-facebook-square"></i></a></li>
+                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </footer>
+    </div>
+    <div class="modal fade" id="ShowModal" style="margin-top:10%;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a href="#" class="close" data-dismiss="modal">&times;</a>
+                    <div id="message1">
+                        <div class="alert alert-success">
+                            <span class="glyphicon glyphicon-ok"></span><strong>Success Message<br />
+                            Send an email to your email address with a confirmation link!<br />
+                            Please check your inbox</strong>
+                        </div>
+                    </div>
+                    <div id="message2">
+                        <div class="alert alert-danger">
+                            <span class="glyphicon glyphicon-remove"></span><strong>Error Message:Your Registration is not Successfull!</strong>
+                        </div>
+                    </div>
+                    <h4 class="text-center">Registration Form</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="Registration">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                <input type="text" class="form-control" id="Username" name="username" placeholder="Username" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                                <input type="text" class="form-control" id="Email" name="email" placeholder="Email" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                <input type="text" class="form-control" id="Password" name="password" placeholder="Password" />
+                            </div>
+                        </div>
+
+                    </form>
+                    <div class="form-group">
+                        <a id="Submit" href="#" class="btn btn-info form-control" onclick="SaveForm()"><i class="glyphicon glyphicon-log-in"></i>  Sign Up</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script>
+        function SignUp() {
+            $("#ShowModal").modal();
+            $("#message1").hide();
+            $("#message2").hide();
+        }
+        var Login = function () {
+            var data = $("#login").serialize();
+            $("#msg").hide();
+            $.ajax({
+                type:"post",
+                data: data,
+                url:"/Home/CheckValidUser",
+                success: function (result) {
+                    if (result == "Fail") {
+                        $("#login")[0].reset();
+                        $("#msg").show();
+                    }
+                    else {
+                        window.location.href = "/Home/Index";
+                        $("#msg").hide();
+                    }
+                   
+                }
+
+            });
+        }
+        var ForgotPassword = function () {
+            var data = $("#login").serialize();
+            $.ajax({
+                type="post",
+                data=data,
+                url: "/Home/ForgotPassword",
+                success: function (result) {
+                    $("#login")[0].reset();
+                    window.location.href = "/Home/Index";
+                }
+
+            });
+        }
+        </script>
+   
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
