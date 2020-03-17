@@ -99,14 +99,14 @@ namespace OnlineShoppingStore.Controllers
             SmtpClient smtp = new SmtpClient();
             smtp.Host = "smtp.gmail.com";
             smtp.Port = 587;
-            smtp.Credentials = new System.Net.NetworkCredential("sumayya.kareem6@gmail.com", "rahmaniraheem");
+            smtp.Credentials = new System.Net.NetworkCredential("xxxx.com", "xxxx");
             smtp.EnableSsl = true;
             MailMessage msg = new MailMessage();
             msg.Subject = "Forgot Password ( The Hijab Store)";
             msg.Body = "Dear " + username + ", Your Password is  " + password + "\n\n\nThanks & Regards\nThe Hijab Store Team";
             string toaddress = pemail;
             msg.To.Add(toaddress);
-            string fromaddress = "The Hijab Store <sumayya.kareem6@gmail.com>";
+            string fromaddress = "The Hijab Store <xxxx@gmail.com>";
             msg.From = new MailAddress(fromaddress);
             try
             {
@@ -136,7 +136,7 @@ namespace OnlineShoppingStore.Controllers
         public static void BuildEmailTemplate(string subjectText, string bodyText, string sendTo)
         {
             string from, to, bcc, cc, subject, body;
-            from = "sumayya.kareem6@gmail.com";
+            from = "xxxx@gmail.com";
             to = sendTo.Trim();
             bcc = "";
             cc = "";
@@ -162,9 +162,9 @@ namespace OnlineShoppingStore.Controllers
         }
         static void SendMail(string sSubject, string sBody,string tAddress)
         {
-            const string senderID = "sumayya.kareem6@gmail.com"; // use sender's email id here..
+            const string senderID = "xxxx@gmail.com"; // use sender's email id here..
           
-            const string senderPassword = "rahmaniraheem"; // sender password here...
+            const string senderPassword = "xxxxx"; // sender password here...
             try
             {
                 SmtpClient smtp = new SmtpClient
@@ -196,7 +196,7 @@ namespace OnlineShoppingStore.Controllers
         //    client.EnableSsl = true;
         //    client.UseDefaultCredentials = false;
         //    client.DeliveryMethod = SmtpDeliveryMethod.Network;
-        //    client.Credentials = new System.Net.NetworkCredential("sumayya.kareem6@gmail.com", "rahmaniraheem");
+        //    client.Credentials = new System.Net.NetworkCredential("xxxx@gmail.com", "xxx");
         //    try
         //    {
         //        client.Send(mail);
